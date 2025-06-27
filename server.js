@@ -49,6 +49,8 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
+app.set('trust proxy', 1);
+
 app.use("/api/user", userRouter);
 app.use("/api/hack", hackRouter);
 
