@@ -91,7 +91,6 @@ const editProfile = async (req, res) => {
         { new: true }
       );
 
-
       if (!updatedProfile) {
         console.log("Profile not found");
         return res.status(400);
@@ -107,10 +106,12 @@ const editProfile = async (req, res) => {
       return res.status(201).json(result);
     }
   } catch (error) {
-    console.error("Error creating profile:", error);
-    return res
-      .status(500)
-      .json({ message: "Server error", error: error.message });
+    console.error("Upload error:", error);
+    res.status(500).json({
+      success: false,
+      message: "Upload failed",
+      error: error.message, 
+    });
   }
 };
 
