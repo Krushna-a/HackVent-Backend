@@ -117,9 +117,12 @@ const addHackathon = async (req, res) => {
         console.log(err);
         res.status(400).send("Something Error Occurred");
       });
-  } catch (error) {
-    console.error("Error:", error);
-    res.status(500).json({ error: "Failed to create hackathon" });
+  } catch (err) {
+    console.error("Database save error:", err);
+    res.status(400).json({
+      error: "Failed to save hackathon",
+      details: process.env.NODE_ENV === "development" ? err.message : null,
+    });
   }
 };
 
