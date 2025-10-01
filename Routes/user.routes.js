@@ -3,6 +3,7 @@ const passport = require("passport");
 const userRouter = express.Router();
 const { storage } = require("../config/config");
 const multer = require("multer");
+const rateLimit = require("express-rate-limit");
 const upload = multer({ storage });
 const {
   loginUser,
@@ -46,5 +47,36 @@ userRouter.post(
   upload.single("profileImage"),
   editProfile
 );
+
+const emailLimiter = rateLimit({
+  windowMs: 60 * 1000, // 1 minute
+  max: 3, // max 3 requests per minute
+  message: "Too many emails sent. Please try again later."
+});
+userRouter.post("/send-email", async (req, res) => {
+  const { name, email, message } = req.body;
+
+  try {
+    const transporter = nodemailer.createTransport({
+      service: "Gmail",
+      auth: {
+        user: "krushnaboinwad70@gmail.com",
+        pass: "@72Kru19sh", // Gmail App Password
+      },
+    });
+
+    await transporter.sendMail({
+      from: email,
+      to: "krushnaboinwad70@gmail.com",
+      subject: `Message from ${name}`,
+      text: message,
+    });
+
+    res.status(200).send("Email sent successfully!");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error sending email.");
+  }
+});
 
 module.exports = userRouter;
