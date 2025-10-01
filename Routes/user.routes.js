@@ -4,6 +4,7 @@ const userRouter = express.Router();
 const { storage } = require("../config/config");
 const multer = require("multer");
 const rateLimit = require("express-rate-limit");
+const nodemailer = require("nodemailer");
 const upload = multer({ storage });
 const {
   loginUser,
@@ -61,7 +62,7 @@ userRouter.post("/send-email", async (req, res) => {
       service: "Gmail",
       auth: {
         user: "krushnaboinwad70@gmail.com",
-        pass: "@72Kru19sh", // Gmail App Password
+        pass: "@72Kru19sh54na", // Gmail App Password
       },
     });
 
