@@ -14,7 +14,7 @@ const MongoStore = require("connect-mongo");
 
 app.use(
   cors({
-    origin: process.env.ORIGIN,
+    origin: ["https://portfolio-topaz-xi-imkt0uyxdo.vercel.app","https://hack-vent-frontend.vercel.app"],
     credentials: true,
     allowedHeaders: ["Content-Type", "Authorization"],
   })
